@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DG Footwear - Calçados Premium</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;400;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Sora', sans-serif;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        ::-webkit-scrollbar { width: 8px; background-color: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background-color: #404040; border-radius: 8px; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .hero-title { animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s backwards; }
+        .hero-subtitle { animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s backwards; }
+        .hero-cta { animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s backwards; }
+        .hero-image { animation: fadeIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s backwards; }
+
+        .reveal, .reveal-left, .reveal-right {
+            opacity: 0;
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal { transform: translateY(40px); }
+        .reveal-left { transform: translateX(-40px); }
+        .reveal-right { transform: translateX(40px); }
+        .is-visible { opacity: 1; transform: translateY(0) translateX(0); }
+        
+        #threejs-background {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .glassmorphism {
+            background: rgba(37, 99, 235, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        .diagonal-item {
+            transition: transform 0.3s ease;
+        }
+        .diagonal-item:hover {
+            transform: scale(1.05) rotate(-2deg);
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); }
+            50% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.3); }
+        }
+        .tiktok-card {
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-neutral-200" id="home">
+
+    <header class="fixed top-4 left-4 right-4 z-50 max-w-2xl mx-auto flex justify-between items-center bg-neutral-900/50 backdrop-blur-md rounded-full border border-neutral-800 px-4 py-2 md:px-6 md:py-3">
+        <a href="#home" class="text-xl md:text-2xl font-bold text-white uppercase tracking-wider">DG</a>
+        <nav class="flex space-x-4 md:space-x-8 items-center text-neutral-300 font-medium text-sm md:text-base">
+            <a href="#colecoes" class="hover:text-white transition-colors">Coleções</a>
+            <a href="#marketplaces" class="hover:text-white transition-colors">Onde Comprar</a>
+            <a href="#faq" class="hover:text-white transition-colors">Dúvidas</a>
+        </nav>
+        <a href="#!" class="hidden md:inline-block px-5 py-2 bg-white text-black text-sm font-semibold rounded-full hover:bg-neutral-200 transition-colors">
+            Contato
+        </a>
+    </header>
+
+    <section class="relative min-h-screen overflow-hidden bg-black">
+        <canvas id="threejs-background"></canvas>
+
+        <div class="container relative z-10 flex flex-col items-center justify-center min-h-screen px-6 mx-auto lg:flex-row lg:justify-center lg:gap-x-24">
+            
+            <div class="w-full max-w-md text-center lg:text-left lg:w-5/12">
+                <h1 class="text-6xl leading-tight hero-title md:text-7xl lg:text-8xl font-extralight text-neutral-200">
+                    O Próximo<br><span class="font-extrabold text-white">Nível</span>
+                </h1>
+                <p class="mt-5 mb-10 text-lg hero-subtitle md:text-xl text-neutral-400">
+                    DG Footwear: Design, conforto e presença.
+                </p>
+                <a href="#!" class="inline-block px-8 py-3 text-sm font-semibold text-black transition-transform duration-300 bg-white rounded-full hero-cta hover:scale-105 hover:bg-neutral-200">
+                    Fale com a DG
+                </a>
+            </div>
+
+            <div class="relative w-full mt-16 lg:mt-0 lg:w-6/12 max-w-md hero-image">
+                <div id="product-carousel" class="relative aspect-square border border-neutral-800 rounded-2xl overflow-hidden" style="filter: drop-shadow(0 25px 30px rgba(0,0,0,0.7));">
+                    
+                    <div class="carousel-item absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-100">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ab?q=80&w=2070&auto=format&fit=crop" alt="Tênis Esportivo" class="w-full h-full object-cover">
+                        <div class="absolute bottom-4 left-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-lg">
+                            <p class="text-white text-sm font-semibold">Tênis Esportivo</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
+                        <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?q=80&w=1964&auto=format&fit=crop" alt="Tênis Casual" class="w-full h-full object-cover">
+                        <div class="absolute bottom-4 left-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-lg">
+                            <p class="text-white text-sm font-semibold">Tênis Casual</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
+                        <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1898&auto=format&fit=crop" alt="Tênis Clássico" class="w-full h-full object-cover">
+                        <div class="absolute bottom-4 left-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-lg">
+                            <p class="text-white text-sm font-semibold">Tênis Clássico</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 md:py-40" id="sobre">
+        <div class="container px-6 mx-auto">
+            <div class="grid items-center gap-12 md:grid-cols-2 lg:gap-24">
+                <div class="reveal">
+                    <img src="https://placehold.co/800x1000/1a1a1a/404040?text=Foto+Editorial+DG" 
+                         alt="Composição editorial da DG Footwear" 
+                         class="object-cover w-full h-full rounded-lg shadow-2xl aspect-[3/4]">
+                </div>
+                <div class="reveal">
+                    <h2 class="text-3xl font-bold md:text-5xl">
+                        Presença que se
+                        <span class="text-neutral-400">constrói nos marketplaces.</span>
+                    </h2>
+                    <p class="mt-6 text-lg leading-relaxed text-neutral-400">
+                        A DG Footwear nasceu do digital e se consolidou através da excelência nos maiores marketplaces do Brasil. Não somos apenas vendedores; somos parceiros de confiança na sua jornada de estilo.
+                    </p>
+                    <p class="mt-4 text-lg leading-relaxed text-neutral-400">
+                        Nosso foco é entregar uma experiência premium, desde as fotos profissionais que você vê até a agilidade da nossa entrega. Qualidade, design e um atendimento profissional via WhatsApp são os pilares que nos garantem reputação máxima em todas as plataformas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 md:py-40 bg-neutral-900" id="colecoes">
+        <div class="container px-6 mx-auto space-y-24 md:space-y-32">
+            
+            <div class="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
+                <div class="reveal-left">
+                    <img src="https://placehold.co/900x900/101010/303030?text=Recorte+Sapato+1" alt="Coleção Urban Comfort Line" class="object-contain w-full h-full rounded-lg" style="filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));">
+                </div>
+                <div class="reveal-right">
+                    <span class="font-semibold text-neutral-500">Coleção 01</span>
+                    <h3 class="mt-2 text-3xl font-bold md:text-4xl">Urban Comfort Line</h3>
+                    <p class="mt-4 text-lg text-neutral-400">A fusão perfeita de estilo urbano e conforto absoluto. Desenvolvida para quem não para, mas não abre mão do design.</p>
+                    <ul class="mt-6 space-y-2">
+                        <li class="flex items-center text-neutral-300"><i data-lucide="check" class="w-5 h-5 mr-2 text-white"></i>Solado com absorção de impacto</li>
+                        <li class="flex items-center text-neutral-300"><i data-lucide="check" class="w-5 h-5 mr-2 text-white"></i>Materiais respiráveis</li>
+                    </ul>
+                    <a href="#!" class="inline-block mt-8 font-semibold text-white transition-colors hover:text-neutral-300">Ver detalhes no WhatsApp &rarr;</a>
+                </div>
+            </div>
+
+            <div class="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
+                <div class="reveal-right md:order-2">
+                    <img src="https://placehold.co/900x900/101010/303030?text=Recorte+Sapato+2" alt="Coleção Everyday Classic" class="object-contain w-full h-full rounded-lg" style="filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));">
+                </div>
+                <div class="reveal-left md:order-1">
+                    <span class="font-semibold text-neutral-500">Coleção 02</span>
+                    <h3 class="mt-2 text-3xl font-bold md:text-4xl">Everyday Classic</h3>
+                    <p class="mt-4 text-lg text-neutral-400">O design atemporal que seu guarda-roupa precisa. Versatilidade para o trabalho, o lazer e qualquer ocasião.</p>
+                    <ul class="mt-6 space-y-2">
+                        <li class="flex items-center text-neutral-300"><i data-lucide="check" class="w-5 h-5 mr-2 text-white"></i>Couro sintético premium</li>
+                        <li class="flex items-center text-neutral-300"><i data-lucide="check" class="w-5 h-5 mr-2 text-white"></i>Acabamento manual</li>
+                    </ul>
+                    <a href="#!" class="inline-block mt-8 font-semibold text-white transition-colors hover:text-neutral-300">Ver detalhes no WhatsApp &rarr;</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-24 md:py-40">
+        <div class="container px-6 mx-auto">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold md:text-5xl reveal">A Excelência é o Padrão</h2>
+                <p class="mt-6 text-lg text-neutral-400 reveal" style="transition-delay: 100ms;">Nossa força nos marketplaces vem de um compromisso diário com a qualidade. Cada detalhe é pensado para oferecer a melhor experiência de compra online.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-8 mt-16 md:grid-cols-3 lg:grid-cols-6">
+                <div class="p-6 text-center rounded-lg bg-neutral-900 reveal" style="transition-delay: 200ms;"><i data-lucide="star" class="w-10 h-10 mx-auto text-white"></i><h4 class="mt-4 font-semibold">Reputação Alta</h4><p class="mt-1 text-sm text-neutral-400">Máxima nota em todas as plataformas.</p></div>
+                <div class="p-6 text-center rounded-lg bg-neutral-900 reveal" style="transition-delay: 300ms;"><i data-lucide="truck" class="w-10 h-10 mx-auto text-white"></i><h4 class="mt-4 font-semibold">Entrega Rápida</h4><p class="mt-1 text-sm text-neutral-400">Logística otimizada para todo o Brasil.</p></div>
+                <div class="p-6 text-center rounded-lg bg-neutral-900 reveal" style="transition-delay: 400ms;"><i data-lucide="award" class="w-10 h-10 mx-auto text-white"></i><h4 class="mt-4 font-semibold">Avaliações 5 Estrelas</h4><p class="mt-1 text-sm text-neutral-400">Clientes 100% satisfeitos.</p></div>
+                <div class="p-6 text-center rounded-lg bg-neutral-900 reveal" style="transition-delay: 500ms;"><i data-lucide="camera" class="w-10 h-10 mx-auto text-white"></i><h4 class="mt-4 font-semibold">Fotos Profissionais</h4><p class="mt-1 text-sm text-neutral-400">Imagens reais e detalhadas do produto.</p></div>
+                <div class="p-6 text-center rounded-lg bg-neutral-900 reveal" style="transition-delay: 600ms;"><i data-lucide="layout-grid" class="w-10 h-10 mx-auto text-white"></i><h4 class="mt-4 font-semibold">Variedade</h4><p class="mt-1 text-sm text-neutral-400">Novas coleções e estoque constante.</p></div>
+                <div class="p-6 text-center rounded-lg bg-neutral-900 reveal" style="transition-delay: 700ms;"><i data-lucide="message-circle" class="w-10 h-10 mx-auto text-white"></i><h4 class="mt-4 font-semibold">Suporte Imediato</h4><p class="mt-1 text-sm text-neutral-400">Atendimento humanizado via WhatsApp.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 overflow-hidden md:py-40 bg-neutral-900" id="marketplaces">
+        <div class="container px-6 mx-auto space-y-20">
+            <div class="max-w-3xl mx-auto mb-20 text-center">
+                <h2 class="text-3xl font-bold md:text-5xl reveal">Onde Você Quiser</h2>
+                <p class="mt-6 text-lg text-neutral-400 reveal" style="transition-delay: 100ms;">Estamos presentes nos maiores centros de compra do país. Escolha sua plataforma preferida e aproveite os benefícios que só a DG Footwear oferece.</p>
+            </div>
+            <div class="p-8 rounded-lg md:p-12 glassmorphism reveal"><div class="flex items-center justify-between"><img src="https://i.ibb.co/HfRzN8Tc/MAGALU.png" alt="Logo Magalu" class="h-8 md:h-10"/><span class="px-4 py-1 text-sm font-semibold text-blue-200 border border-blue-300 rounded-full">Parceiro Ouro</span></div><div class="grid grid-cols-2 gap-6 mt-8 md:grid-cols-3"><div class="bg-black/20 rounded-lg p-4 text-center"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+A" alt="Produto 1" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Tênis DG Classic</h5></div><div class="bg-black/20 rounded-lg p-4 text-center"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+B" alt="Produto 2" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Bota Urban</h5></div><div class="hidden bg-black/20 rounded-lg p-4 text-center md:block"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+C" alt="Produto 3" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Sider Essential</h5></div></div><div class="mt-8 text-center"><a href="#!" class="inline-block px-10 py-3 font-bold text-white transition-transform duration-300 bg-blue-600 rounded-full hover:scale-105 hover:bg-blue-500">Comprar no Magalu</a></div></div>
+            <div class="p-8 text-black rounded-lg md:p-12 bg-yellow-400 reveal"><div class="flex items-center justify-between"><img src="https://i.ibb.co/chjy9Dmx/MERCADO-LIVRE.png" alt="Logo Mercado Livre" class="h-8 md:h-10"/><span class="px-4 py-1 text-sm font-semibold text-yellow-400 bg-black rounded-full">MercadoLíder Platinum</span></div><div class="grid grid-cols-2 gap-6 mt-8 md:grid-cols-3"><div class="text-white bg-black/20 rounded-lg p-4 text-center"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+D" alt="Produto 1" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Tênis DG Classic</h5></div><div class="text-white bg-black/20 rounded-lg p-4 text-center"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+E" alt="Produto 2" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Bota Urban</h5></div><div class="hidden text-white bg-black/20 rounded-lg p-4 text-center md:block"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+F" alt="Produto 3" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Sider Essential</h5></div></div><div class="mt-8 text-center"><a href="#!" class="inline-block px-10 py-3 font-bold text-yellow-400 transition-transform duration-300 bg-black rounded-full hover:scale-105 hover:bg-neutral-800">Comprar no Mercado Livre</a></div></div>
+            <div class="p-8 rounded-lg md:p-12 bg-orange-600/10 border border-orange-600/20 reveal"><div class="flex items-center justify-between"><img src="https://i.ibb.co/9HgWDQS0/shopee.png" alt="Logo Shopee" class="h-8 md:h-10"/><span class="px-4 py-1 text-sm font-semibold text-orange-100 bg-orange-600 rounded-full">Mais Vendidos</span></div><div class="grid grid-cols-2 gap-6 mt-8 md:grid-cols-3"><div class="p-4 text-center rounded-lg bg-black/20 diagonal-item"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+G" alt="Produto 1" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Tênis DG Classic</h5></div><div class="p-4 text-center rounded-lg bg-black/20 diagonal-item" style="transition-delay: 50ms;"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+H" alt="Produto 2" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Bota Urban</h5></div><div class="hidden p-4 text-center rounded-lg md:block bg-black/20 diagonal-item" style="transition-delay: 100ms;"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+I" alt="Produto 3" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Sider Essential</h5></div></div><div class="mt-8 text-center"><a href="#!" class="inline-block px-10 py-3 font-bold text-white transition-transform duration-300 bg-orange-600 rounded-full hover:scale-105 hover:bg-orange-500">Comprar na Shopee</a></div></div>
+            <div class="p-8 border rounded-lg md:p-12 bg-zinc-900 border-neutral-700 reveal tiktok-card"><div class="flex items-center justify-between"><div class="flex items-center gap-x-2"><img src="https://i.ibb.co/fzGXff4k/TIKTOK.png" alt="Logo TikTok Shop" class="h-8 md:h-10"/><span class="text-2xl font-extrabold text-white">Shop</span></div><span class="px-4 py-1 text-sm font-semibold text-black bg-white rounded-full">Produtos Populares</span></div><div class="grid grid-cols-2 gap-6 mt-8 md:grid-cols-3"><div class="p-4 text-center rounded-lg bg-black/20"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+J" alt="Produto 1" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Tênis DG Classic</h5></div><div class="p-4 text-center rounded-lg bg-black/20"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+K" alt="Produto 2" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Bota Urban</h5></div><div class="hidden p-4 text-center rounded-lg md:block bg-black/20"><img src="https://placehold.co/300x300/000/FFF?text=Sapato+L" alt="Produto 3" class="object-cover rounded-md aspect-square"><h5 class="mt-2 text-sm font-semibold truncate">Sider Essential</h5></div></div><div class="mt-8 text-center"><a href="#!" class="inline-block px-10 py-3 font-bold text-black transition-transform duration-300 bg-white rounded-full hover:scale-105 hover:bg-neutral-200">Ver na TikTok Shop</a></div></div>
+        </div>
+    </section>
+
+    <section class="py-24 md:py-40" id="destaques">
+        <div class="container px-6 mx-auto">
+            <div class="max-w-3xl mx-auto mb-16 text-center">
+                <h2 class="text-3xl font-bold md:text-5xl reveal">Seleção Premium</h2>
+                <p class="mt-6 text-lg text-neutral-400 reveal" style="transition-delay: 100ms;">Conheça os favoritos da nossa equipe. Produtos que definem a essência da DG Footwear: design impecável, conforto duradouro e qualidade inquestionável.</p>
+            </div>
+            <div class="grid gap-10 md:grid-cols-3">
+                <div class="reveal group" style="transition-delay: 200ms;"><div class="mb-6 overflow-hidden rounded-lg bg-neutral-900"><img src="https://placehold.co/600x600/1a1a1a/404040?text=Sapato+Hero+1" alt="Sapato Hero 1" class="object-cover w-full transition-transform duration-500 aspect-square group-hover:scale-105" style="filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));"></div><h3 class="text-2xl font-semibold">DG Velocity</h3><p class="mt-2 text-neutral-400">O tênis que combina performance e luxo para o dia a dia.</p><a href="#!" class="inline-block mt-4 font-semibold text-white transition-colors hover:text-neutral-300">Consultar no WhatsApp &rarr;</a></div>
+                <div class="reveal group" style="transition-delay: 300ms;"><div class="mb-6 overflow-hidden rounded-lg bg-neutral-900"><img src="https://placehold.co/600x600/1a1a1a/404040?text=Sapato+Hero+2" alt="Sapato Hero 2" class="object-cover w-full transition-transform duration-500 aspect-square group-hover:scale-105" style="filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));"></div><h3 class="text-2xl font-semibold">Bota DG Explorer</h3><p class="mt-2 text-neutral-400">Robusta por fora, surpreendentemente confortável por dentro.</p><a href="#!" class="inline-block mt-4 font-semibold text-white transition-colors hover:text-neutral-300">Consultar no WhatsApp &rarr;</a></div>
+                <div class="reveal group" style="transition-delay: 400ms;"><div class="mb-6 overflow-hidden rounded-lg bg-neutral-900"><img src="https://placehold.co/600x600/1a1a1a/404040?text=Sapato+Hero+3" alt="Sapato Hero 3" class="object-cover w-full transition-transform duration-500 aspect-square group-hover:scale-105" style="filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));"></div><h3 class="text-2xl font-semibold">Mocassim DG Royal</h3><p class="mt-2 text-neutral-400">A elegância clássica com a assinatura de conforto DG.</p><a href="#!" class="inline-block mt-4 font-semibold text-white transition-colors hover:text-neutral-300">Consultar no WhatsApp &rarr;</a></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 md:py-40 bg-neutral-900" id="depoimentos">
+        <div class="container px-6 mx-auto">
+            <div class="max-w-3xl mx-auto mb-16 text-center">
+                <h2 class="text-3xl font-bold md:text-5xl reveal">O que dizem sobre nós</h2>
+                <p class="mt-6 text-lg text-neutral-400 reveal" style="transition-delay: 100ms;">Nossa maior conquista é a satisfação de quem compra. Veja comentários reais de clientes nos marketplaces.</p>
+                <div class="mt-8 reveal" style="transition-delay: 200ms;"><span class="text-5xl font-bold text-white">4.9</span><span class="ml-2 text-xl text-neutral-400">/ 5.0</span><div class="flex justify-center mt-2 text-yellow-400"><i data-lucide="star" class="w-6 h-6 fill-current"></i><i data-lucide="star" class="w-6 h-6 fill-current"></i><i data-lucide="star" class="w-6 h-6 fill-current"></i><i data-lucide="star" class="w-6 h-6 fill-current"></i><i data-lucide="star-half" class="w-6 h-6 fill-current"></i></div></div>
+            </div>
+            <div class="grid gap-8 md:grid-cols-3">
+                <div class="p-8 border rounded-lg bg-black border-neutral-800 reveal" style="transition-delay: 300ms;"><p class="text-lg italic text-neutral-300">"Honestamente, superou minhas expectativas. A foto era ótima, mas pessoalmente o tênis é ainda mais bonito. Chegou em 2 dias."</p><p class="mt-4 font-semibold text-white">- João P., São Paulo/SP</p><span class="text-sm text-neutral-500">Via Mercado Livre</span></div>
+                <div class="p-8 border rounded-lg bg-black border-neutral-800 reveal" style="transition-delay: 400ms;"><p class="text-lg italic text-neutral-300">"Qualidade de shopping por um preço justo. O material é muito bom e veio super bem embalado. Atendimento no zap nota 10."</p><p class="mt-4 font-semibold text-white">- Maria Eduarda S., Rio de Janeiro/RJ</p><span class="text-sm text-neutral-500">Via Magalu</span></div>
+                <div class="p-8 border rounded-lg bg-black border-neutral-800 reveal" style="transition-delay: 500ms;"><p class="text-lg italic text-neutral-300">"Comprei o da promoção na Shopee e já quero outro. Muito confortável, uso para trabalhar todo dia. Recomendo a loja."</p><p class="mt-4 font-semibold text-white">- Carlos A., Belo Horizonte/MG</p><span class="text-sm text-neutral-500">Via Shopee</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 md:py-40" id="faq">
+        <div class="container px-6 mx-auto">
+            <div class="max-w-3xl mx-auto mb-16 text-center">
+                <h2 class="text-3xl font-bold md:text-5xl reveal">Dúvidas Comuns</h2>
+                <p class="mt-6 text-lg text-neutral-400 reveal" style="transition-delay: 100ms;">Respostas rápidas para as perguntas mais frequentes.</p>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-4">
+                <details class="rounded-lg bg-neutral-900 reveal" style="transition-delay: 200ms;"><summary class="flex items-center justify-between p-6 font-semibold cursor-pointer">Vocês vendem diretamente por este site?<i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i></summary><div class="p-6 pt-0 text-neutral-400">Não. Este site é o nosso catálogo e central de marca. Todas as nossas vendas são realizadas com segurança através dos nossos parceiros: Magalu, Mercado Livre, Shopee e TikTok Shop.</div></details>
+                <details class="rounded-lg bg-neutral-900 reveal" style="transition-delay: 300ms;"><summary class="flex items-center justify-between p-6 font-semibold cursor-pointer">Como funcionam os envios?<i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i></summary><div class="p-6 pt-0 text-neutral-400">Trabalhamos com a logística oficial de cada plataforma (como Magalu Entregas, Mercado Envios), garantindo as entregas mais rápidas e seguras do Brasil.</div></details>
+                <details class="rounded-lg bg-neutral-900 reveal" style="transition-delay: 400ms;"><summary class="flex items-center justify-between p-6 font-semibold cursor-pointer">Vocês têm política de troca?<i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i></summary><div class="p-6 pt-0 text-neutral-400">Sim. Seguimos 100% o Código de Defesa do Consumidor e as políticas de cada marketplace. Você tem garantia total de troca ou devolução gratuita.</div></details>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 border-t bg-zinc-900 border-neutral-800">
+        <div class="container px-6 mx-auto">
+            <div class="grid gap-12 text-center md:text-left md:grid-cols-4">
+                <div>
+                    <h3 class="text-2xl font-bold text-white">DG Footwear</h3>
+                    <p class="mt-4 text-neutral-400">Design, conforto e presença.</p>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold text-white">Navegação</h5>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#home" class="text-neutral-400 hover:text-white">Home</a></li>
+                        <li><a href="#colecoes" class="text-neutral-400 hover:text-white">Coleções</a></li>
+                        <li><a href="#marketplaces" class="text-neutral-400 hover:text-white">Onde Comprar</a></li>
+                        <li><a href="#faq" class="text-neutral-400 hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="font-semibold text-white">Nossas Lojas</h5>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#!" class="text-neutral-400 hover:text-white">Magalu</a></li>
+                        <li><a href="#!" class="text-neutral-400 hover:text-white">Mercado Livre</a></li>
+                        <li><a href="#!" class="text-neutral-400 hover:text-white">Shopee</a></li>
+                        <li><a href="#!" class="text-neutral-400 hover:text-white">TikTok Shop</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="font-semibold text-white">Fale Conosco</h5>
+                    <p class="mt-4 text-neutral-400">Dúvidas, parcerias ou suporte? Estamos online.</p>
+                    <a href="#!" class="inline-block px-8 py-3 mt-4 text-sm font-bold text-black transition-transform duration-300 bg-white rounded-full hover:scale-105 hover:bg-neutral-200">
+                        WhatsApp da Equipe
+                    </a>
+                </div>
+            </div>
+            
+            <div class="pt-8 mt-12 text-center border-t border-neutral-800">
+                <p class="text-sm text-neutral-500">&copy; 2025 DG Footwear. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        lucide.createIcons();
+
+        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('is-visible');
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => observer.observe(el));
+
+        document.querySelectorAll('details').forEach(detail => {
+            detail.addEventListener('toggle', (e) => {
+                const icon = e.target.querySelector('i');
+                if (icon) icon.style.transform = detail.open ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+        });
+
+        function initProductCarousel() {
+            const carouselContainer = document.getElementById('product-carousel');
+            if (!carouselContainer) return;
+
+            const items = carouselContainer.querySelectorAll('.carousel-item');
+            let currentIndex = 0;
+
+            setInterval(() => {
+                items[currentIndex].classList.remove('opacity-100');
+                items[currentIndex].classList.add('opacity-0');
+                currentIndex = (currentIndex + 1) % items.length;
+                items[currentIndex].classList.remove('opacity-0');
+                items[currentIndex].classList.add('opacity-100');
+            }, 4000);
+        }
+        initProductCarousel();
+
+        function initParticles() {
+            const canvas = document.querySelector('#threejs-background');
+            if (!canvas || typeof THREE === 'undefined') {
+                setTimeout(initParticles, 100);
+                return;
+            }
+
+            let scene, camera, renderer, particles;
+            let mouseX = 0;
+            const windowHalfX = window.innerWidth / 2;
+
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            const particleCount = 5000;
+            const positions = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 20;
+            }
+
+            const particlesGeometry = new THREE.BufferGeometry();
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.015,
+                transparent: true,
+                opacity: 0.4,
+                depthWrite: false,
+                blending: THREE.NormalBlending,
+                sizeAttenuation: true,
+            });
+
+            particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+
+            document.addEventListener('mousemove', (e) => { mouseX = e.clientX - windowHalfX; });
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                camera.position.x += ((mouseX / windowHalfX) * 0.2 - camera.position.x) * 0.01;
+                camera.lookAt(scene.position);
+                particles.rotation.y += 0.00005;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+        initParticles();
+    </script>
+</body>
+</html>
